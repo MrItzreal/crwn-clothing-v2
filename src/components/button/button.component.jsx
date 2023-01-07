@@ -22,3 +22,6 @@ export default Button;
 //default
 //inverted
 //google sign in
+//Note: the button used JS interpolation
+
+//Sign In Form @ 7:05mins

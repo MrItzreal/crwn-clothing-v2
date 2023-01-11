@@ -99,7 +99,11 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
-//The onSubmit event handler helps us run callbacks whenever we submit forms
-//Custom Button Component @ 0:00
-//Button component was the separate component that was created in order to provide
-//3 different types of buttons
+//The onSubmit event handler helps us run callbacks whenever we submit forms.
+//Custom Button Component @ 0:00.
+//Button component was the separate component that was created in order to provide.
+//3 different types of buttons.
+//--------------------------------------
+//By default, buttons are of type "submit" inside of forms. So, 
+//in order to avoid unnecessary submissions, we can make our buttons of 
+//type "button".

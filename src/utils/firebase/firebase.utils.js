@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -93,3 +94,5 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   //If we don't get an email or password then our function will not run
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => await signOut(auth);

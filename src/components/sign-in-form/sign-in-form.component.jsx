@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+
+import { UserContext } from "../../contexts/user.context";
 
 import {
   signInWithGooglePopup,
@@ -20,7 +22,7 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  console.log(formFields);
+  const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     //this function helps to clear out the fields after
@@ -38,11 +40,12 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+      setCurrentUser(user);
+
       resetFormFields();
     } catch (error) {
       switch (error.code) {
@@ -104,6 +107,6 @@ export default SignInForm;
 //Button component was the separate component that was created in order to provide.
 //3 different types of buttons.
 //--------------------------------------
-//By default, buttons are of type "submit" inside of forms. So, 
-//in order to avoid unnecessary submissions, we can make our buttons of 
+//By default, buttons are of type "submit" inside of forms. So,
+//in order to avoid unnecessary submissions, we can make our buttons of
 //type "button".

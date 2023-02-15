@@ -100,11 +100,12 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
-  onAuthStateChanged(auth, callback, errorCallback, completedCallback);
+  onAuthStateChanged(auth, callback);
+//, errorCallback, completedCallback
 
 //In order for onAuthStateChanged to work, it needs two parameters
 /**
- * {
+ * {LISTENER PATTERN:
  * next: callback,
  * error: errorCallback,
  * complete: completedCallback

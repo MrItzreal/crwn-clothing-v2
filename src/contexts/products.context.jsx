@@ -18,4 +18,3 @@ export const ProductsProvider = ({ children }) => {
 
 //when starting with context you need to import createContext method from react
 //For any context we need the context value and the provider
- 

@@ -16,6 +16,10 @@ import {
   doc, //retrieves the data
   getDoc, //access the data
   setDoc, //sets the data
+  collection, //allows a collection reference
+  writeBatch,
+  query,
+  getDocs,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -49,6 +53,38 @@ export const signInWithGoogleRedirect = () =>
 export const db = getFirestore();
 //export const db = getFirestore() allows us to tell firebase
 //when we want to receive or get a document
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  field
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+  //transaction: represents a successful unit of work to a database
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
 
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -111,3 +147,8 @@ export const onAuthStateChangedListener = (callback) =>
  * complete: completedCallback
  * }
  */
+
+/**Utility functions minimize the impact that changes on 3rd party libraries have on our code.
+ * In other words, the reason we created different functions for each of firebase & firestore libraries
+ * methods was in case anything gets updated. If the updates damage our code, then, it becomes easier
+ * to find the source of the problem since every method is broken down into separate functions*/
